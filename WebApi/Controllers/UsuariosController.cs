@@ -46,6 +46,7 @@ namespace WebApi.Controllers
             return await Mediator.Send(data);
         }
 
+        [Authorize(Roles ="administrador")]
         [HttpPut("{id}")]
         public async Task<ActionResult<Unit>> Actualizar(Guid id, editarUsuario.Ejecuta data){
             data.Id = id;
