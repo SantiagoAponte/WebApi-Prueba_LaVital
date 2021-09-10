@@ -52,10 +52,7 @@ namespace WebApi
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
             services.Configure<ConexionConfiguracion>(Configuration.GetSection("ConnectionStrings"));
-
-
-            //Gestor de la comunicación en el middleware.
-            //services.AddScoped<ILogin, loginRepositorio>();
+       
             //Constructor de la entidad Core de microsoft, añadiendo al usuario creado con un rol asignado y un claim.
             var builder = services.AddIdentityCore<UsuarioModel>();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
@@ -77,9 +74,9 @@ namespace WebApi
                     ValidateIssuer = false
                 };
             });
-
             services.AddScoped<IJwtGenerador, JwtGenerador>();
             services.AddScoped<IUsuarioSesion, UsuarioSesion>();
+            //Gestor de la comunicación en el middleware.
             services.AddMediatR(typeof(Consulta.Manejador).Assembly);
 
             services.AddTransient<IFactoryConnection, FactoryConnection>();
@@ -98,11 +95,10 @@ namespace WebApi
             }
 
             app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
+            
             app.UseAuthentication();
+            app.UseRouting();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

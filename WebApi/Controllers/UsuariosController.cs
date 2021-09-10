@@ -12,7 +12,6 @@ using static WebApi.Controllers.MyControllerBase;
 
 namespace WebApi.Controllers
 {
-    [ApiController]
     public class UsuariosController : MyControllerBase
     {
         private readonly IMediator _mediator;
@@ -46,7 +45,7 @@ namespace WebApi.Controllers
             return await Mediator.Send(data);
         }
 
-        [Authorize(Roles ="administrador")]
+        
         [HttpPut("{id}")]
         public async Task<ActionResult<Unit>> Actualizar(Guid id, editarUsuario.Ejecuta data){
             data.Id = id;
@@ -58,7 +57,8 @@ namespace WebApi.Controllers
             return await _mediator.Send(new eliminarUsuario.Ejecuta{Id = id});
         }
 
-        [HttpGet("{id}")]
+
+        [HttpGet("{id}"), Authorize]
         public async Task<ActionResult<UsuarioModel>> ObtenerPorId(Guid id){
             return await _mediator.Send(new consultarPorId.Ejecuta{Id = id});
 

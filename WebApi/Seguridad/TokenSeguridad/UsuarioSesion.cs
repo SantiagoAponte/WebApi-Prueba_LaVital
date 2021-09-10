@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
+using WebApi.Models.Contracts;
 
 namespace WebApi.Seguridad.TokenSeguridad
 {
